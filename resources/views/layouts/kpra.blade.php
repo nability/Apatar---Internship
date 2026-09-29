@@ -165,11 +165,124 @@
         }
         .btn-kpra:hover { opacity: 0.9; color: #fff; }
 
+        .online-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.5rem 0.85rem;
+            border: 1px solid #a7f3d0;
+            border-radius: 8px;
+            background: #ecfdf5;
+            color: #047857;
+            font-size: 0.75rem;
+            font-weight: 600;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .online-status i {
+            color: #10b981;
+            font-size: 0.5rem;
+        }
+
         .stat-card {
             background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1.25rem;
             position: relative; overflow: hidden; transition: transform 0.2s;
         }
         .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+
+        .stat-icon {
+            background: linear-gradient(135deg, #0f766e, #0e7490) !important;
+        }
+
+        @keyframes kpra-fade-up {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-body > *,
+        .content-body .card,
+        .content-body .access-card,
+        .content-body .cp-card,
+        .content-body .module-card,
+        .content-body .alert-item,
+        .content-body .chart-placeholder {
+            opacity: 0;
+        }
+
+        .page-ready .content-body > *,
+        .page-ready .content-body .card,
+        .page-ready .content-body .access-card,
+        .page-ready .content-body .cp-card,
+        .page-ready .content-body .module-card,
+        .page-ready .content-body .alert-item,
+        .page-ready .content-body .chart-placeholder {
+            animation: kpra-fade-up 0.75s ease-out both;
+        }
+
+        .content-body .row > [class*="col-"]:nth-child(2) > * { animation-delay: 0.06s; }
+        .content-body .row > [class*="col-"]:nth-child(3) > * { animation-delay: 0.12s; }
+        .content-body .row > [class*="col-"]:nth-child(4) > * { animation-delay: 0.18s; }
+
+        .content-body .module-card,
+        .content-body .cp-card,
+        .content-body .access-card,
+        .content-body .btn,
+        .content-body button,
+        .content-body a:not(.sidebar-link) {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+        }
+
+        .content-body .module-card:hover,
+        .content-body .cp-card:hover,
+        .content-body .access-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(15, 118, 110, 0.35);
+            box-shadow: 0 10px 22px rgba(15, 118, 110, 0.1);
+        }
+
+        .content-body .btn:hover,
+        .content-body button:hover,
+        .content-body a:not(.sidebar-link):hover {
+            transform: translateY(-1px);
+        }
+
+        .sidebar-link {
+            transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+        }
+
+        .sidebar-link:hover {
+            transform: translateX(3px);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .content-body > *,
+            .content-body .card,
+            .content-body .access-card,
+            .content-body .cp-card,
+            .content-body .module-card,
+            .content-body .alert-item,
+            .content-body .chart-placeholder {
+                animation: none;
+                opacity: 1;
+            }
+
+            .content-body .module-card:hover,
+            .content-body .cp-card:hover,
+            .content-body .access-card:hover,
+            .content-body .btn:hover,
+            .content-body button:hover,
+            .content-body a:not(.sidebar-link):hover,
+            .sidebar-link:hover {
+                transform: none;
+            }
+        }
     </style>
     @stack('styles')
 </head>
@@ -201,29 +314,46 @@
                 Dashboard
             </a>
 
-            <div class="nav-section-label mt-3">Modul KPRA</div>
-            <a href="{{ route('kuantitatif.index') }}" class="sidebar-link {{ request()->routeIs('kuantitatif.*') ? 'active' : '' }}">
-                <div class="nav-icon"><i class="fa-solid fa-chart-column"></i></div>
-                Kuantitatif (DDD)
-            </a>
-            <a href="{{ route('kualitatif.index') }}" class="sidebar-link {{ request()->routeIs('kualitatif.*') ? 'active' : '' }}">
-                <div class="nav-icon"><i class="fa-solid fa-file-medical"></i></div>
-                Kualitatif (Gyssens)
-            </a>
-            <a href="{{ route('pga.index') }}" class="sidebar-link {{ request()->routeIs('pga.*') ? 'active' : '' }}">
-                <div class="nav-icon"><i class="fa-solid fa-clipboard-check"></i></div>
-                PGA & AWaRe
-            </a>
+            @php
+                $user = Auth::user();
+                $accessibleModules = $user->isAdmin()
+                    ? \App\Models\Module::orderBy('sidebar_order')->get()
+                    : \App\Models\Module::whereHas('roleAccesses', function ($query) use ($user) {
+                        $query->whereIn('role_id', $user->roleIds())
+                            ->where('can_view', true);
+                    })->orderBy('sidebar_order')->get();
+            @endphp
 
-            <div class="nav-section-label mt-3">Integrasi SIMRS</div>
-            <a href="{{ route('integrasi.farmasi') }}" class="sidebar-link {{ request()->routeIs('integrasi.farmasi') ? 'active' : '' }}">
-                <div class="nav-icon"><i class="fa-solid fa-prescription-bottle-medical"></i></div>
-                Farmasi
-            </a>
-            <a href="{{ route('integrasi.clinical-pathway') }}" class="sidebar-link {{ request()->routeIs('integrasi.clinical-pathway') ? 'active' : '' }}">
-                <div class="nav-icon"><i class="fa-solid fa-notes-medical"></i></div>
-                Clinical Pathway
-            </a>
+            @if($accessibleModules->isNotEmpty())
+                <div class="nav-section-label mt-3">Modul Akses</div>
+                @foreach($accessibleModules as $mod)
+                    @php
+                        $isRouteActive = false;
+                        if ($mod->key === 'kuantitatif') $isRouteActive = request()->routeIs('kuantitatif.*');
+                        elseif ($mod->key === 'kualitatif') $isRouteActive = request()->routeIs('kualitatif.*');
+                        elseif ($mod->key === 'pga') $isRouteActive = request()->routeIs('pga.*');
+                        elseif ($mod->key === 'farmasi') $isRouteActive = request()->routeIs('integrasi.farmasi');
+                        elseif ($mod->key === 'clinical_pathway') $isRouteActive = request()->routeIs('integrasi.clinical-pathway');
+                    @endphp
+                    <a href="{{ route($mod->route_prefix) }}" class="sidebar-link {{ $isRouteActive ? 'active' : '' }}">
+                        <div class="nav-icon"><i class="{{ $mod->icon ?? 'fa-solid fa-cube' }}"></i></div>
+                        {{ $mod->label }}
+                    </a>
+                @endforeach
+            @endif
+
+            @if($user->isAdmin())
+                <div class="nav-section-label mt-3">Administrasi</div>
+                <a href="{{ route('admin.access.index') }}" class="sidebar-link {{ request()->routeIs('admin.access.*') ? 'active' : '' }}">
+                    <div class="nav-icon"><i class="fa-solid fa-user-shield"></i></div>
+                    Kelola Akses Role
+                </a>
+                <a href="{{ route('admin.users.index') }}" class="sidebar-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                    <div class="nav-icon"><i class="fa-solid fa-users-gear"></i></div>
+                    Manajemen User
+                </a>
+            @endif
+
         </div>
 
         <div class="sidebar-footer">
@@ -231,7 +361,9 @@
                 <div class="user-avatar">{{ substr(Auth::user()->name ?? 'A', 0, 1) }}</div>
                 <div style="flex:1; overflow:hidden;">
                     <p class="sidebar-name text-truncate">{{ Auth::user()->name ?? 'Admin' }}</p>
-                    <p class="sidebar-role text-truncate">{{ Auth::user()->email ?? 'admin@apatar.com' }}</p>
+                            <p class="sidebar-role text-truncate" style="color:var(--kpra-green); font-size:0.7rem;">
+                                {{ $user->isAdmin() ? 'Administrator Utama' : implode(', ', $user->roleKeys()) }}
+                            </p>
                 </div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -250,12 +382,18 @@
                 <h5 class="mb-0 fw-700" style="font-size:1.05rem; color:#0f172a;">@yield('page-title', 'Dashboard')</h5>
             </div>
             <div class="d-flex align-items-center gap-3">
-                <span class="badge bg-success bg-opacity-15 text-success px-3 py-2" style="font-size:0.75rem; border-radius:8px;">
-                    <i class="fa-solid fa-circle me-1" style="font-size:0.5rem;"></i> Online — RS Sekarwangi
+                <span class="online-status">
+                    <i class="fa-solid fa-circle"></i> Online — RS Sekarwangi
                 </span>
                 <a href="{{ route('profile.edit') }}" class="btn btn-sm btn-outline-secondary" style="border-radius:8px; font-size:0.8rem;">
                     <i class="fa-solid fa-user me-1"></i>Profil
                 </a>
+                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-sm btn-outline-danger" style="border-radius:8px; font-size:0.8rem;">
+                        <i class="fa-solid fa-right-from-bracket me-1"></i>Keluar
+                    </button>
+                </form>
             </div>
         </header>
 
@@ -266,6 +404,13 @@
 
     {{-- Bootstrap JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+            requestAnimationFrame(function () {
+                document.body.classList.add('page-ready');
+            });
+        });
+    </script>
     @stack('scripts')
 </body>
 </html>

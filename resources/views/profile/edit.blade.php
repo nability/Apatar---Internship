@@ -111,7 +111,7 @@
                 </div>
                 <h5 class="mb-1">{{ Auth::user()->name }}</h5>
                 <p class="text-muted mb-2" style="font-size:0.85rem;">{{ Auth::user()->email }}</p>
-                <span class="badge bg-success bg-opacity-15 text-success px-3 py-2" style="font-size:0.75rem;border-radius:8px;">
+                <span class="badge px-3 py-2" style="background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; font-size:0.75rem; border-radius:8px;">
                     <i class="fa-solid fa-circle-check me-1"></i>Aktif
                 </span>
             </div>

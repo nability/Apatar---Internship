@@ -21,26 +21,21 @@
         * { box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: #f8fafc;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
+            margin: 0;
+            overflow-x: hidden;
         }
         .login-card {
-            background: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-            max-width: 900px;
+            min-height: 100vh;
             width: 100%;
             display: flex;
         }
         .login-left {
-            background: linear-gradient(135deg, var(--kpra-green), var(--kpra-cyan));
-            padding: 3rem;
-            flex: 1;
+            flex: 0 0 50%;
+            min-height: 100vh;
+            padding: clamp(2rem, 6vw, 6rem);
+            background: linear-gradient(145deg, #064e3b 0%, #0f766e 48%, #0891b2 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -49,6 +44,9 @@
             color: #fff;
             position: relative;
             overflow: hidden;
+            transform-origin: right center;
+            will-change: transform, opacity;
+            animation: reveal-left 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
         .login-left::before {
             content: '';
@@ -69,31 +67,82 @@
         .login-left-content {
             position: relative;
             z-index: 1;
+            max-width: 440px;
         }
         .login-logo {
-            width: 80px; height: 80px;
+            width: 88px; height: 88px;
             background: rgba(255,255,255,0.2);
-            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            font-size: 2.7rem;
             margin: 0 auto 1.5rem;
             backdrop-filter: blur(10px);
         }
         .login-left h2 {
-            font-size: 1.8rem;
+            font-size: clamp(2rem, 3vw, 3rem);
             font-weight: 700;
             margin-bottom: 0.5rem;
+            letter-spacing: 0.08em;
         }
         .login-left p {
-            font-size: 0.95rem;
+            font-size: 1rem;
             opacity: 0.9;
             margin-bottom: 0;
+            line-height: 1.7;
         }
         .login-right {
-            padding: 3rem 2.5rem;
-            flex: 1;
+            flex: 0 0 50%;
+            min-height: 100vh;
+            padding: clamp(2rem, 7vw, 7rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .login-form-box {
+            width: 100%;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: clamp(1.75rem, 4vw, 3rem);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+            transform-origin: left center;
+            will-change: transform, opacity;
+            animation: reveal-right 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+        }
+
+        @keyframes reveal-left {
+            from {
+                opacity: 0;
+                transform: translateX(-100%) scaleX(0.82);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scaleX(1);
+            }
+        }
+
+        @keyframes reveal-right {
+            from {
+                opacity: 0;
+                transform: translateX(100%) scaleX(0.82);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scaleX(1);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .login-left,
+            .login-form-box {
+                animation: none;
+            }
         }
         .login-right h3 {
             font-size: 1.6rem;
@@ -152,8 +201,16 @@
         }
         @media (max-width: 768px) {
             .login-card { flex-direction: column; }
-            .login-left { padding: 2rem; }
-            .login-right { padding: 2rem; }
+            .login-left {
+                flex-basis: auto;
+                min-height: 42vh;
+                padding: 3rem 1.5rem;
+            }
+            .login-right {
+                flex-basis: auto;
+                min-height: 58vh;
+                padding: 3rem 1.5rem;
+            }
         }
     </style>
 </head>
@@ -176,63 +233,65 @@
 
         {{-- Right Panel (Form) --}}
         <div class="login-right">
-            <h3>Selamat Datang</h3>
-            <p>Masuk untuk mengakses dashboard KPRA</p>
+            <div class="login-form-box">
+                <h3>Selamat Datang</h3>
+                <p>Masuk untuk mengakses dashboard KPRA</p>
 
-            {{-- Session Status --}}
-            @if (session('status'))
-                <div class="alert alert-success mb-3">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-
-                {{-- Email --}}
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input id="email" type="email" name="email" class="form-control @error('email') is-invalid @enderror" 
-                           value="{{ old('email') }}" required autofocus autocomplete="username" 
-                           placeholder="admin@apatar.com">
-                    @error('email')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                {{-- Password --}}
-                <div class="mb-3">
-                    <label for="password" class="form-label">Kata Sandi</label>
-                    <input id="password" type="password" name="password" class="form-control @error('password') is-invalid @enderror" 
-                           required autocomplete="current-password" 
-                           placeholder="••••••••">
-                    @error('password')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                {{-- Remember Me --}}
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="remember_me" name="remember">
-                    <label class="form-check-label" for="remember_me" style="font-size:0.85rem; color:#64748b;">
-                        Ingat saya
-                    </label>
-                </div>
-
-                <div class="d-grid mb-3">
-                    <button type="submit" class="btn btn-login">
-                        <i class="fa-solid fa-right-to-bracket me-2"></i>Masuk
-                    </button>
-                </div>
-
-                @if (Route::has('password.request'))
-                    <div class="text-center">
-                        <a href="{{ route('password.request') }}" class="forgot-link">
-                            Lupa kata sandi?
-                        </a>
+                {{-- Session Status --}}
+                @if (session('status'))
+                    <div class="alert alert-success mb-3">
+                        {{ session('status') }}
                     </div>
                 @endif
-            </form>
+
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+
+                    {{-- Email --}}
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input id="email" type="email" name="email" class="form-control @error('email') is-invalid @enderror" 
+                               value="{{ old('email') }}" required autofocus autocomplete="username" 
+                               placeholder="admin@apatar.com">
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Password --}}
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Kata Sandi</label>
+                        <input id="password" type="password" name="password" class="form-control @error('password') is-invalid @enderror" 
+                               required autocomplete="current-password" 
+                               placeholder="••••••••">
+                        @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Remember Me --}}
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="remember_me" name="remember">
+                        <label class="form-check-label" for="remember_me" style="font-size:0.85rem; color:#64748b;">
+                            Ingat saya
+                        </label>
+                    </div>
+
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-login">
+                            <i class="fa-solid fa-right-to-bracket me-2"></i>Masuk
+                        </button>
+                    </div>
+
+                    @if (Route::has('password.request'))
+                        <div class="text-center">
+                            <a href="{{ route('password.request') }}" class="forgot-link">
+                                Lupa kata sandi?
+                            </a>
+                        </div>
+                    @endif
+                </form>
+            </div>
         </div>
     </div>
 

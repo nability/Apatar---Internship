@@ -59,7 +59,7 @@ $auditData = [
         <x-stat-card title="Pending Review" value="18" unit="resep" icon="fa-solid fa-hourglass-half" icon-bg="linear-gradient(135deg,#f59e0b,#fbbf24)" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Kepatuhan PPAB" value="82" unit="%" icon="fa-solid fa-shield-check" icon-bg="linear-gradient(135deg,#6366f1,#8b5cf6)" trend="+2%" :trend-up="true" />
+        <x-stat-card title="Kepatuhan PPAB" value="82" unit="%" icon="fa-solid fa-shield-halved" icon-bg="linear-gradient(135deg,#6366f1,#8b5cf6)" trend="+2%" :trend-up="true" />
     </div>
 </div>
 
@@ -77,7 +77,7 @@ $auditData = [
             <div class="card-body px-4 pb-4">
                 <div class="row g-3">
                     @foreach([
-                        ['Access',  '#10b981', '39.9%', 98,  'fa-solid fa-shield-check',  'Antibiotik first-line, tersedia luas, aman untuk sebagian besar infeksi umum.'],
+                        ['Access',  '#10b981', '39.9%', 98,  'fa-solid fa-shield-halved',  'Antibiotik first-line, tersedia luas, aman untuk sebagian besar infeksi umum.'],
                         ['Watch',   '#f59e0b', '47.5%', 117, 'fa-solid fa-eye',            'Antibiotik second-line, risiko resistensi lebih tinggi, perlu indikasi kuat.'],
                         ['Reserve', '#ef4444', '12.6%', 31,  'fa-solid fa-skull-crossbones','Antibiotik lini terakhir, hanya untuk kasus MDR, persetujuan khusus wajib.'],
                     ] as $a)
@@ -94,7 +94,7 @@ $auditData = [
                                     <h6 class="mb-0 fw-700" style="font-size:0.92rem; color:#0f172a;">AWaRe: {{ $a[0] }}</h6>
                                     <span class="badge aware-{{ $a[0] }}" style="font-size:0.65rem;">{{ $a[2] }} dari total resep</span>
                                 </div>
-                                <span class="ms-auto fw-700" style="font-size:1.4rem; color: {{ $a[1] }};">{{ $a[1] }}</span>
+                                <span class="ms-auto fw-700" style="font-size:1.4rem; color: {{ $a[1] }};">{{ $a[3] }}</span>
                             </div>
                             <div class="progress mb-2" style="height:6px; border-radius:3px;">
                                 <div class="progress-bar progress-bar-{{ strtolower($a[0]) }}"

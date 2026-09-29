@@ -55,7 +55,7 @@ $dddData = [
         <x-stat-card title="Total DDD (Mar)" value="772" unit="DDD/100HH" icon="fa-solid fa-chart-column" icon-bg="linear-gradient(135deg,#10b981,#06b6d4)" trend="+8.3%" :trend-up="false" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Access" value="308" unit="DDD" icon="fa-solid fa-shield-check" icon-bg="linear-gradient(135deg,#10b981,#34d399)" trend="+5%" :trend-up="true" />
+        <x-stat-card title="Access" value="308" unit="DDD" icon="fa-solid fa-shield-halved" icon-bg="linear-gradient(135deg,#10b981,#34d399)" trend="+5%" :trend-up="true" />
     </div>
     <div class="col-6 col-xl-3">
         <x-stat-card title="Watch" value="367" unit="DDD" icon="fa-solid fa-eye" icon-bg="linear-gradient(135deg,#f59e0b,#fbbf24)" trend="+12%" :trend-up="false" />

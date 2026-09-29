@@ -49,6 +49,10 @@
         border-radius: 14px;
         display: flex; align-items: center; justify-content: center;
         font-size: 1.3rem; color: #fff;
+        background: linear-gradient(135deg, #0f766e, #0e7490) !important;
+    }
+    .stat-icon {
+        background: linear-gradient(135deg, #0f766e, #0e7490) !important;
     }
     .alert-item {
         display: flex; align-items: start; gap: 0.75rem;
@@ -121,7 +125,7 @@
                 title="Kepatuhan PGA"
                 value="78"
                 unit="%"
-                icon="fa-solid fa-shield-check"
+                icon="fa-solid fa-shield-halved"
                 icon-bg="linear-gradient(135deg, #f59e0b, #ef4444)"
                 trend="-2.1%"
                 :trend-up="false"
