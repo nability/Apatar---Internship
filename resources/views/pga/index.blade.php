@@ -10,27 +10,30 @@
 @push('styles')
 <style>
     .table-kpra thead th {
-        background: #f8fafc; font-size: 0.75rem; font-weight: 600;
-        color: #64748b; text-transform: uppercase; letter-spacing: 0.04em;
-        border-bottom: 2px solid #e2e8f0;
+        background: #F7F8F7; font-size: 0.75rem; font-weight: 600;
+        color: #7A858F; text-transform: uppercase; letter-spacing: 0.04em;
+        border-bottom: 1px solid #E7EBE9;
+        padding: 0.75rem 1rem;
     }
-    .table-kpra tbody td { font-size: 0.83rem; vertical-align: middle; }
+    .table-kpra tbody td { font-size: 0.85rem; vertical-align: middle; padding: 0.75rem 1rem; }
+    .table-kpra tbody tr:hover { background: #F7F8F7; }
+    .table-kpra tbody tr { border-bottom: 1px solid #F7F8F7; }
 
-    .audit-card { border-radius: 14px; border: 1px solid #e2e8f0; transition: all 0.2s; }
-    .audit-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.07); transform: translateY(-2px); }
+    .audit-card { border-radius: 16px; border: 1px solid #E7EBE9; transition: all 0.2s; }
+    .audit-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.05); transform: translateY(-2px); }
 
-    .aware-Access  { background:#d1fae5; color:#065f46; border: 1px solid #6ee7b7; }
-    .aware-Watch   { background:#fef9c3; color:#713f12; border: 1px solid #fde68a; }
-    .aware-Reserve { background:#fee2e2; color:#991b1b; border: 1px solid #fca5a5; }
+    .aware-Access  { background:#E8F6EF; color:#065F46; border: 1px solid #A7F3D0; }
+    .aware-Watch   { background:#FFF5DD; color:#9A6A00; border: 1px solid #FDE68A; }
+    .aware-Reserve { background:#FDECEC; color:#B83A3A; border: 1px solid #FCA5A5; }
 
-    .status-badge-approved  { background:#d1fae5; color:#065f46; }
-    .status-badge-pending   { background:#fef9c3; color:#713f12; }
-    .status-badge-rejected  { background:#fee2e2; color:#991b1b; }
-    .status-badge-review    { background:#dbeafe; color:#1e40af; }
+    .status-badge-approved  { background:#E8F6EF; color:#065F46; border-radius: 999px; padding: 0.25rem 0.6rem; font-size: 0.7rem; }
+    .status-badge-pending   { background:#FFF5DD; color:#9A6A00; border-radius: 999px; padding: 0.25rem 0.6rem; font-size: 0.7rem; }
+    .status-badge-rejected  { background:#FDECEC; color:#B83A3A; border-radius: 999px; padding: 0.25rem 0.6rem; font-size: 0.7rem; }
+    .status-badge-review    { background:#EAF2FF; color:#1e40af; border-radius: 999px; padding: 0.25rem 0.6rem; font-size: 0.7rem; }
 
-    .progress-bar-access  { background: linear-gradient(90deg,#10b981,#34d399); }
-    .progress-bar-watch   { background: linear-gradient(90deg,#f59e0b,#fbbf24); }
-    .progress-bar-reserve { background: linear-gradient(90deg,#ef4444,#f87171); }
+    .progress-bar-access  { background: linear-gradient(90deg,#087F5B,#34d399); }
+    .progress-bar-watch   { background: linear-gradient(90deg,#E6A23C,#fbbf24); }
+    .progress-bar-reserve { background: linear-gradient(90deg,#D9534F,#f87171); }
 </style>
 @endpush
 
@@ -50,16 +53,16 @@ $auditData = [
 {{-- KPI Stats --}}
 <div class="row g-3 mb-4">
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Total Audit" value="247" unit="resep" icon="fa-solid fa-clipboard-check" icon-bg="linear-gradient(135deg,#10b981,#06b6d4)" />
+        <x-stat-card title="Total Audit" value="247" unit="resep" icon="fa-solid fa-clipboard-check" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Reserve Disetujui" value="23" unit="resep" icon="fa-solid fa-triangle-exclamation" icon-bg="linear-gradient(135deg,#ef4444,#dc2626)" trend="-3" :trend-up="true" />
+        <x-stat-card title="Reserve Disetujui" value="23" unit="resep" icon="fa-solid fa-triangle-exclamation" trend="-3" :trend-up="true" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Pending Review" value="18" unit="resep" icon="fa-solid fa-hourglass-half" icon-bg="linear-gradient(135deg,#f59e0b,#fbbf24)" />
+        <x-stat-card title="Pending Review" value="18" unit="resep" icon="fa-solid fa-hourglass-half" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Kepatuhan PPAB" value="82" unit="%" icon="fa-solid fa-shield-halved" icon-bg="linear-gradient(135deg,#6366f1,#8b5cf6)" trend="+2%" :trend-up="true" />
+        <x-stat-card title="Kepatuhan PPAB" value="82" unit="%" icon="fa-solid fa-shield-halved" trend="+2%" :trend-up="true" />
     </div>
 </div>
 

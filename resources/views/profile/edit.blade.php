@@ -11,61 +11,66 @@
 @push('styles')
 <style>
     .profile-card {
-        background: #fff;
-        border: 1px solid #e2e8f0;
-        border-radius: 14px;
+        background: #FFFFFF;
+        border: 1px solid #E7EBE9;
+        border-radius: 16px;
         padding: 1.5rem;
         margin-bottom: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     }
     .profile-card h5 {
-        font-size: 0.95rem;
+        font-size: 1rem;
         font-weight: 700;
-        color: #0f172a;
+        color: #1F2933;
         margin-bottom: 0.5rem;
     }
     .profile-card p.text-muted {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
+        color: #7A858F;
         margin-bottom: 1.5rem;
     }
     .form-label {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         font-weight: 600;
-        color: #374151;
+        color: #1F2933;
     }
     .form-control {
         border-radius: 10px;
-        border: 1px solid #e2e8f0;
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
+        border: 1px solid #E7EBE9;
+        padding: 0.65rem 1rem;
+        font-size: 0.875rem;
+        background: #FFFFFF;
     }
     .form-control:focus {
-        border-color: var(--kpra-green);
-        box-shadow: 0 0 0 0.2rem rgba(16,185,129,0.15);
+        border-color: #087F5B;
+        box-shadow: 0 0 0 3px rgba(8, 127, 91, 0.10);
+        outline: none;
     }
     .btn-save {
-        background: linear-gradient(135deg, var(--kpra-green), var(--kpra-cyan));
+        background: #087F5B;
         border: none;
         color: #fff;
         font-weight: 600;
         padding: 0.5rem 1.25rem;
-        border-radius: 8px;
+        border-radius: 10px;
         font-size: 0.85rem;
     }
     .btn-save:hover {
-        opacity: 0.9;
+        background: #056B4D;
         color: #fff;
     }
     .btn-danger {
-        background: #ef4444;
+        background: #D9534F;
         border: none;
         font-weight: 600;
         padding: 0.5rem 1.25rem;
-        border-radius: 8px;
+        border-radius: 10px;
         font-size: 0.85rem;
     }
     .alert {
         border-radius: 10px;
         font-size: 0.85rem;
+        border: 1px solid #E7EBE9;
     }
 </style>
 @endpush
@@ -105,27 +110,27 @@
             {{-- User Info Card --}}
             <div class="profile-card text-center">
                 <div class="mb-3">
-                    <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--kpra-green),var(--kpra-cyan));display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:2rem;color:#fff;font-weight:700;">
+                    <div style="width:80px;height:80px;border-radius:50%;background:#087F5B;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:2rem;color:#fff;font-weight:700;">
                         {{ substr(Auth::user()->name, 0, 1) }}
                     </div>
                 </div>
                 <h5 class="mb-1">{{ Auth::user()->name }}</h5>
                 <p class="text-muted mb-2" style="font-size:0.85rem;">{{ Auth::user()->email }}</p>
-                <span class="badge px-3 py-2" style="background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; font-size:0.75rem; border-radius:8px;">
+                <span class="badge px-3 py-2" style="background:#E7F5EF; color:#087F5B; border:1px solid #E7EBE9; font-size:0.75rem; border-radius:999px;">
                     <i class="fa-solid fa-circle-check me-1"></i>Aktif
                 </span>
             </div>
 
             {{-- Quick Info --}}
             <div class="profile-card">
-                <h6 class="fw-700 mb-3" style="font-size:0.85rem;">Info Cepat</h6>
-                <div class="d-flex justify-content-between mb-2" style="font-size:0.8rem;">
+                <h6 class="fw-700 mb-3" style="font-size:0.9rem; color:#1F2933;">Info Cepat</h6>
+                <div class="d-flex justify-content-between mb-2" style="font-size:0.85rem;">
                     <span class="text-muted">Bergabung</span>
-                    <span class="fw-600">{{ Auth::user()->created_at->format('d M Y') }}</span>
+                    <span class="fw-600" style="color:#1F2933;">{{ Auth::user()->created_at->format('d M Y') }}</span>
                 </div>
-                <div class="d-flex justify-content-between" style="font-size:0.8rem;">
+                <div class="d-flex justify-content-between" style="font-size:0.85rem;">
                     <span class="text-muted">Role</span>
-                    <span class="fw-600">Admin KPRA</span>
+                    <span class="fw-600" style="color:#1F2933;">Admin KPRA</span>
                 </div>
             </div>
         </div>

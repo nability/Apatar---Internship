@@ -11,35 +11,37 @@
 <style>
     .gyssens-badge {
         display: inline-flex; align-items: center; gap: 0.35rem;
-        padding: 0.25rem 0.65rem;
-        border-radius: 20px;
-        font-size: 0.72rem; font-weight: 600;
+        padding: 0.4rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.75rem; font-weight: 600;
     }
-    .gyssens-0 { background: #d1fae5; color: #065f46; }  /* Tepat */
-    .gyssens-I { background: #dbeafe; color: #1e40af; }
-    .gyssens-II { background: #fef9c3; color: #713f12; }
-    .gyssens-III { background: #ffedd5; color: #9a3412; }
-    .gyssens-IV { background: #fee2e2; color: #991b1b; }  /* Tidak Tepat */
-    .gyssens-V { background: #f3e8ff; color: #6b21a8; }  /* Tidak Bisa Dievaluasi */
+    .gyssens-0 { background: #E8F6EF; color: #065F46; }
+    .gyssens-I { background: #EAF2FF; color: #1e40af; }
+    .gyssens-II { background: #FFF5DD; color: #9A6A00; }
+    .gyssens-III { background: #FFEDD5; color: #9a3412; }
+    .gyssens-IV { background: #FDECEC; color: #B83A3A; }
+    .gyssens-V { background: #F3E8FF; color: #6b21a8; }
     .table-kpra thead th {
-        background: #f8fafc; font-size: 0.75rem; font-weight: 600;
-        color: #64748b; text-transform: uppercase; letter-spacing: 0.04em;
-        border-bottom: 2px solid #e2e8f0;
+        background: #F7F8F7; font-size: 0.75rem; font-weight: 600;
+        color: #7A858F; text-transform: uppercase; letter-spacing: 0.04em;
+        border-bottom: 1px solid #E7EBE9;
+        padding: 0.75rem 1rem;
     }
-    .table-kpra tbody td { font-size: 0.83rem; vertical-align: middle; }
+    .table-kpra tbody td { font-size: 0.85rem; vertical-align: middle; padding: 0.75rem 1rem; }
+    .table-kpra tbody tr:hover { background: #F7F8F7; }
+    .table-kpra tbody tr { border-bottom: 1px solid #F7F8F7; }
 
-    /* Gyssens flow diagram */
     .gyssens-step {
-        border: 1px solid #e2e8f0;
+        border: 1px solid #E7EBE9;
         border-radius: 10px;
         padding: 0.65rem 0.85rem;
         font-size: 0.78rem;
-        background: #fff;
+        background: #FFFFFF;
         position: relative;
     }
-    .gyssens-step.step-ok { border-color: #10b981; background: #f0fdf4; }
-    .gyssens-step.step-warn { border-color: #f59e0b; background: #fffbeb; }
-    .gyssens-step.step-bad { border-color: #ef4444; background: #fef2f2; }
+    .gyssens-step.step-ok { border-color: #087F5B; background: #E7F5EF; }
+    .gyssens-step.step-warn { border-color: #E6A23C; background: #FFF5DD; }
+    .gyssens-step.step-bad { border-color: #D9534F; background: #FDECEC; }
 </style>
 @endpush
 
@@ -57,16 +59,16 @@ $pasienList = [
 
 <div class="row g-3 mb-4">
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Total Pasien" value="147" unit="pasien" icon="fa-solid fa-users" icon-bg="linear-gradient(135deg,#10b981,#06b6d4)" />
+        <x-stat-card title="Total Pasien" value="147" unit="pasien" icon="fa-solid fa-users" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Gyssens 0 (Tepat)" value="89" unit="%" icon="fa-solid fa-circle-check" icon-bg="linear-gradient(135deg,#10b981,#34d399)" trend="+4%" :trend-up="true" />
+        <x-stat-card title="Gyssens 0 (Tepat)" value="89" unit="%" icon="fa-solid fa-circle-check" trend="+4%" :trend-up="true" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Tidak Tepat (II-IV)" value="43" unit="pasien" icon="fa-solid fa-circle-xmark" icon-bg="linear-gradient(135deg,#f59e0b,#ef4444)" trend="-3" :trend-up="true" />
+        <x-stat-card title="Tidak Tepat (II-IV)" value="43" unit="pasien" icon="fa-solid fa-circle-xmark" trend="-3" :trend-up="true" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Pending Review" value="12" unit="pasien" icon="fa-solid fa-hourglass-half" icon-bg="linear-gradient(135deg,#6366f1,#8b5cf6)" />
+        <x-stat-card title="Pending Review" value="12" unit="pasien" icon="fa-solid fa-hourglass-half" />
     </div>
 </div>
 
@@ -86,21 +88,21 @@ $pasienList = [
             });
         }
     }">
-        <div class="card border-0 shadow-sm" style="border-radius:14px;">
+        <div class="card border-0" style="border-radius:16px; border:1px solid #E7EBE9; box-shadow:0 4px 20px rgba(0,0,0,0.04);">
             <div class="card-header bg-white border-0 pt-3 px-4">
                 <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
-                    <h6 class="mb-0 fw-600" style="font-size:0.9rem;">
-                        <i class="fa-solid fa-file-medical me-2" style="color:var(--kpra-green);"></i>
+                    <h6 class="mb-0 fw-600" style="font-size:0.95rem; color:#1F2933;">
+                        <i class="fa-solid fa-file-medical me-2" style="color:#087F5B;"></i>
                         Daftar Evaluasi Gyssens
                     </h6>
                     <div class="d-flex gap-2 flex-wrap">
                         <input type="text" x-model="search"
                                class="form-control form-control-sm"
                                placeholder="Cari nama / no. RM…"
-                               style="width:200px; border-radius:8px; font-size:0.8rem;">
+                               style="width:200px; border-radius:10px; font-size:0.8rem; border:1px solid #E7EBE9;">
                         <select x-model="filterGyssens"
                                 class="form-select form-select-sm"
-                                style="width:160px; border-radius:8px; font-size:0.8rem;">
+                                style="width:160px; border-radius:10px; font-size:0.8rem; border:1px solid #E7EBE9;">
                             <option value="all">Semua Gyssens</option>
                             <option value="0">0 — Tepat</option>
                             <option value="IIa">IIa — Dosis</option>
@@ -108,7 +110,7 @@ $pasienList = [
                             <option value="IVa">IVa — Lebih Efektif</option>
                             <option value="V">V — Tidak Evaluasi</option>
                         </select>
-                        <a href="#" class="btn btn-kpra btn-sm px-3" style="border-radius:8px; font-size:0.78rem;">
+                        <a href="#" class="btn btn-sm px-3" style="background:#087F5B; color:#fff; border-radius:10px; font-size:0.78rem; border:none; font-weight:600;">
                             <i class="fa-solid fa-plus me-1"></i>Tambah Evaluasi
                         </a>
                     </div>

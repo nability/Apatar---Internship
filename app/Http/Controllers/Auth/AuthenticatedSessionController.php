@@ -28,6 +28,16 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $user = $request->user();
+
+        // If user has multiple roles, redirect to role selection
+        if ($user->roles()->count() > 1) {
+            return redirect()->route('role.select');
+        }
+
+        // Set active role to first (only) role
+        session(['active_role_id' => $user->roles()->first()?->id]);
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

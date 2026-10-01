@@ -11,20 +11,22 @@
 @push('styles')
 <style>
     .table-kpra thead th {
-        background: #f8fafc; font-size: 0.75rem; font-weight: 600;
-        color: #64748b; text-transform: uppercase; letter-spacing: 0.04em;
-        border-bottom: 2px solid #e2e8f0;
+        background: #F7F8F7; font-size: 0.75rem; font-weight: 600;
+        color: #7A858F; text-transform: uppercase; letter-spacing: 0.04em;
+        border-bottom: 1px solid #E7EBE9;
+        padding: 0.75rem 1rem;
     }
-    .table-kpra tbody td { font-size: 0.83rem; vertical-align: middle; }
+    .table-kpra tbody td { font-size: 0.85rem; vertical-align: middle; padding: 0.75rem 1rem; }
+    .table-kpra tbody tr:hover { background: #F7F8F7; }
+    .table-kpra tbody tr { border-bottom: 1px solid #F7F8F7; }
 
-    /* Autocomplete dropdown */
     .search-result-item {
         padding: 0.6rem 1rem;
         cursor: pointer;
-        border-bottom: 1px solid #f1f5f9;
+        border-bottom: 1px solid #F7F8F7;
         transition: background 0.15s;
     }
-    .search-result-item:hover { background: #f8fafc; }
+    .search-result-item:hover { background: #F7F8F7; }
     .search-result-item:last-child { border-bottom: none; }
 </style>
 @endpush
@@ -45,16 +47,16 @@ $obatFarmasi = [
 
 <div class="row g-3 mb-4">
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Total Item Antibiotik" value="48" unit="item" icon="fa-solid fa-prescription-bottle-medical" icon-bg="linear-gradient(135deg,#10b981,#06b6d4)" />
+        <x-stat-card title="Total Item Antibiotik" value="48" unit="item" icon="fa-solid fa-prescription-bottle-medical" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Stok Kritis (< 100)" value="3" unit="item" icon="fa-solid fa-box-open" icon-bg="linear-gradient(135deg,#ef4444,#dc2626)" />
+        <x-stat-card title="Stok Kritis (< 100)" value="3" unit="item" icon="fa-solid fa-box-open" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Nilai Stok Reserve" value="Rp 28.4" unit="Juta" icon="fa-solid fa-money-bill-wave" icon-bg="linear-gradient(135deg,#6366f1,#8b5cf6)" />
+        <x-stat-card title="Nilai Stok Reserve" value="Rp 28.4" unit="Juta" icon="fa-solid fa-money-bill-wave" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Sinkronisasi Terakhir" value="09:15" unit="WIB" icon="fa-solid fa-rotate" icon-bg="linear-gradient(135deg,#f59e0b,#fbbf24)" description="Hari ini, Sep 2026" />
+        <x-stat-card title="Sinkronisasi Terakhir" value="09:15" unit="WIB" icon="fa-solid fa-rotate" description="Hari ini, Sep 2026" />
     </div>
 </div>
 

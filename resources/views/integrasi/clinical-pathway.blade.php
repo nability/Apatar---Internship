@@ -11,15 +11,18 @@
 @push('styles')
 <style>
     .table-kpra thead th {
-        background: #f8fafc; font-size: 0.75rem; font-weight: 600;
-        color: #64748b; text-transform: uppercase; letter-spacing: 0.04em;
-        border-bottom: 2px solid #e2e8f0;
+        background: #F7F8F7; font-size: 0.75rem; font-weight: 600;
+        color: #7A858F; text-transform: uppercase; letter-spacing: 0.04em;
+        border-bottom: 1px solid #E7EBE9;
+        padding: 0.75rem 1rem;
     }
-    .table-kpra tbody td { font-size: 0.83rem; vertical-align: middle; }
+    .table-kpra tbody td { font-size: 0.85rem; vertical-align: middle; padding: 0.75rem 1rem; }
+    .table-kpra tbody tr:hover { background: #F7F8F7; }
+    .table-kpra tbody tr { border-bottom: 1px solid #F7F8F7; }
 
     .cp-card {
-        border: 1px solid #e2e8f0; border-radius:12px;
-        padding: 1rem; background: #fff;
+        border: 1px solid #E7EBE9; border-radius:12px;
+        padding: 1rem; background: #FFFFFF;
         transition: all 0.2s;
     }
     .cp-card:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.07); transform: translateY(-2px); }
@@ -31,7 +34,7 @@
     .timeline-line::before {
         content: '';
         position: absolute; left: 0.4rem; top: 0; bottom: 0;
-        width: 2px; background: #e2e8f0;
+        width: 2px; background: #E7EBE9;
     }
     .timeline-dot {
         position: absolute; left: 0;
@@ -65,16 +68,16 @@ $pasienCP = [
 
 <div class="row g-3 mb-4">
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Total CP Aktif" value="6" unit="pathway" icon="fa-solid fa-notes-medical" icon-bg="linear-gradient(135deg,#10b981,#06b6d4)" />
+        <x-stat-card title="Total CP Aktif" value="6" unit="pathway" icon="fa-solid fa-notes-medical" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Pasien On CP" value="38" unit="pasien" icon="fa-solid fa-user-injured" icon-bg="linear-gradient(135deg,#6366f1,#8b5cf6)" />
+        <x-stat-card title="Pasien On CP" value="38" unit="pasien" icon="fa-solid fa-user-injured" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Varian CP" value="9" unit="kasus" icon="fa-solid fa-code-branch" icon-bg="linear-gradient(135deg,#f59e0b,#ef4444)" description="Deviasi dari standar CP" />
+        <x-stat-card title="Varian CP" value="9" unit="kasus" icon="fa-solid fa-code-branch" description="Deviasi dari standar CP" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Kepatuhan CP" value="76" unit="%" icon="fa-solid fa-chart-line" icon-bg="linear-gradient(135deg,#10b981,#34d399)" trend="+3%" :trend-up="true" />
+        <x-stat-card title="Kepatuhan CP" value="76" unit="%" icon="fa-solid fa-chart-line" trend="+3%" :trend-up="true" />
     </div>
 </div>
 

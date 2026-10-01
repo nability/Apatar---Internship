@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Helpers\RoleHelper;
 
 class CheckModuleAccess
 {
@@ -27,8 +28,13 @@ class CheckModuleAccess
             return $next($request);
         }
 
-        $hasAccess = \App\Models\RoleModuleAccess::query()
-            ->whereIn('role_id', $user->roleIds())
+        $activeRole = RoleHelper::getActiveRole();
+
+        if (!$activeRole) {
+            abort(403, 'Role tidak aktif. Silakan pilih role terlebih dahulu.');
+        }
+
+        $hasAccess = \App\Models\RoleModuleAccess::where('role_id', $activeRole->id)
             ->whereHas('module', fn ($query) => $query->where('key', $moduleKey))
             ->where($action, true)
             ->exists();

@@ -11,28 +11,31 @@
 <style>
     .chart-placeholder {
         height: 280px;
-        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        background: #F7F8F7;
         border-radius: 12px;
         display: flex; flex-direction: column;
         align-items: center; justify-content: center;
-        border: 2px dashed #e2e8f0;
-        color: #94a3b8;
+        border: 2px dashed #E7EBE9;
+        color: #7A858F;
     }
     .chart-placeholder i { font-size: 2.5rem; margin-bottom: 0.5rem; }
     .table-kpra thead th {
-        background: #f8fafc;
+        background: #F7F8F7;
         font-size: 0.75rem;
         font-weight: 600;
-        color: #64748b;
+        color: #7A858F;
         text-transform: uppercase;
         letter-spacing: 0.04em;
-        border-bottom: 2px solid #e2e8f0;
+        border-bottom: 1px solid #E7EBE9;
+        padding: 0.75rem 1rem;
     }
-    .table-kpra tbody td { font-size: 0.83rem; vertical-align: middle; }
+    .table-kpra tbody td { font-size: 0.85rem; vertical-align: middle; padding: 0.75rem 1rem; }
+    .table-kpra tbody tr:hover { background: #F7F8F7; }
+    .table-kpra tbody tr { border-bottom: 1px solid #F7F8F7; }
     .ddd-bar {
         height: 6px;
         border-radius: 3px;
-        background: linear-gradient(90deg, #10b981, #06b6d4);
+        background: #087F5B;
     }
 </style>
 @endpush
@@ -52,16 +55,16 @@ $dddData = [
 
 <div class="row g-3 mb-4">
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Total DDD (Mar)" value="772" unit="DDD/100HH" icon="fa-solid fa-chart-column" icon-bg="linear-gradient(135deg,#10b981,#06b6d4)" trend="+8.3%" :trend-up="false" />
+        <x-stat-card title="Total DDD (Mar)" value="772" unit="DDD/100HH" icon="fa-solid fa-chart-column" trend="+8.3%" :trend-up="false" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Access" value="308" unit="DDD" icon="fa-solid fa-shield-halved" icon-bg="linear-gradient(135deg,#10b981,#34d399)" trend="+5%" :trend-up="true" />
+        <x-stat-card title="Access" value="308" unit="DDD" icon="fa-solid fa-shield-halved" trend="+5%" :trend-up="true" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Watch" value="367" unit="DDD" icon="fa-solid fa-eye" icon-bg="linear-gradient(135deg,#f59e0b,#fbbf24)" trend="+12%" :trend-up="false" />
+        <x-stat-card title="Watch" value="367" unit="DDD" icon="fa-solid fa-eye" trend="+12%" :trend-up="false" />
     </div>
     <div class="col-6 col-xl-3">
-        <x-stat-card title="Reserve" value="97" unit="DDD" icon="fa-solid fa-triangle-exclamation" icon-bg="linear-gradient(135deg,#ef4444,#dc2626)" trend="+28%" :trend-up="false" />
+        <x-stat-card title="Reserve" value="97" unit="DDD" icon="fa-solid fa-triangle-exclamation" trend="+28%" :trend-up="false" />
     </div>
 </div>
 

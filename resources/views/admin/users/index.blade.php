@@ -11,43 +11,46 @@
 @push('styles')
 <style>
     .user-panel {
-        background: #fff;
-        border: 1px solid #e2e8f0;
-        border-radius: 14px;
+        background: #FFFFFF;
+        border: 1px solid #E7EBE9;
+        border-radius: 16px;
         overflow: hidden;
     }
     .user-panel-header {
         padding: 1rem 1.25rem;
-        background: #f8fafc;
-        border-bottom: 1px solid #e2e8f0;
+        background: #F7F8F7;
+        border-bottom: 1px solid #E7EBE9;
     }
     .user-row {
         padding: 1rem 1.25rem;
-        border-bottom: 1px solid #f1f5f9;
+        border-bottom: 1px solid #F7F8F7;
     }
     .user-row:last-child { border-bottom: 0; }
     .user-avatar {
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         border-radius: 50%;
         color: #fff;
-        background: linear-gradient(135deg, var(--kpra-green), var(--kpra-cyan));
+        background: #087F5B;
         font-weight: 700;
+        font-size: 0.95rem;
     }
     .btn-save {
-        background: linear-gradient(135deg, var(--kpra-green), var(--kpra-cyan));
+        background: #087F5B;
         border: 0;
         color: #fff;
         font-size: 0.8rem;
         font-weight: 600;
-        border-radius: 8px;
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
     }
     .btn-save:hover { color: #fff; opacity: 0.9; }
-    .form-control, .form-select { font-size: 0.85rem; border-radius: 9px; }
-    .role-check { font-size: 0.78rem; color: #475569; }
+    .form-control, .form-select { font-size: 0.85rem; border-radius: 10px; border: 1px solid #E7EBE9; }
+    .form-control:focus, .form-select:focus { border-color: #087F5B; box-shadow: 0 0 0 3px rgba(8, 127, 91, 0.10); }
+    .role-check { font-size: 0.78rem; color: #7A858F; }
 </style>
 @endpush
 
@@ -138,9 +141,6 @@
                                         {{ $role->label }}
                                     </label>
                                 @endforeach
-                                <button type="submit" class="btn btn-save px-3 py-2">
-                                    <i class="fa-solid fa-save me-1"></i>Simpan Role
-                                </button>
                                 <span class="role-save-status" style="display:none;font-size:0.72rem;"></span>
                             </form>
                         </div>
@@ -154,11 +154,12 @@
 
 @push('scripts')
 <script>
-    async function submitWithoutReload(form, button, status, successCallback) {
-        const originalLabel = button.innerHTML;
-        button.disabled = true;
-        button.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i>Menyimpan...';
-        status.style.display = 'none';
+    async function autoSaveUserRoles(form) {
+        const status = form.querySelector('.role-save-status');
+        
+        status.textContent = 'Menyimpan...';
+        status.className = 'role-save-status text-muted';
+        status.style.display = 'block';
 
         try {
             const response = await fetch(form.action, {
@@ -175,41 +176,25 @@
                 throw new Error(data.message || data.errors?.roles?.[0] || 'Perubahan gagal disimpan.');
             }
 
-            status.textContent = data.message;
-            status.className = status.className.replace('text-danger', '') + ' text-success';
-            successCallback?.(data);
+            status.textContent = '✓ Tersimpan';
+            status.className = 'role-save-status text-success';
+            setTimeout(() => { status.style.display = 'none'; }, 2000);
         } catch (error) {
-            status.textContent = error.message;
-            status.className = status.className.replace('text-success', '') + ' text-danger';
-        } finally {
-            status.style.display = 'block';
-            button.disabled = false;
-            button.innerHTML = originalLabel;
+            status.textContent = '✗ ' + error.message;
+            status.className = 'role-save-status text-danger';
         }
     }
 
     document.querySelectorAll('.user-role-form').forEach(function (form) {
         form.addEventListener('submit', function (event) {
             event.preventDefault();
-            submitWithoutReload(
-                form,
-                form.querySelector('button[type="submit"]'),
-                form.querySelector('.role-save-status')
-            );
+        });
+
+        form.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                autoSaveUserRoles(form);
+            });
         });
     });
-
-    const createForm = document.querySelector('.create-user-form');
-    if (createForm) {
-        createForm.addEventListener('submit', function (event) {
-            event.preventDefault();
-            submitWithoutReload(
-                createForm,
-                createForm.querySelector('button[type="submit"]'),
-                createForm.querySelector('.create-user-status'),
-                function () { createForm.reset(); }
-            );
-        });
-    }
 </script>
 @endpush
